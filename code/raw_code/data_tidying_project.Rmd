@@ -25,7 +25,9 @@ library(ggplot2)
 
 ### Get Data
 
-[Data Set 1](https://data.world/retail/department-store-sales): Sales from the Retail Trade and Food Services Report from the US Census. This dataset only covers Department Stores, though the report covers a wide range of retail types. [1992-2016]
+The following chunk has code for obtaining data from two data sets:
+
+[Data Set 1](https://data.world/retail/department-store-sales): Sales from the Retail Trade and Food Services Report from the US Census. This data set only covers Department Stores, though the report covers a wide range of retail types. [1992-2016]
 
 [Data Set 2](https://data.world/garyhoov/retail-sales-growth) US Retail Sales by Store Type with Growth Rate [2009-2014]
 
@@ -46,6 +48,8 @@ colnames(df2) <- df2[1,]
 
 ### Save Raw Data
 
+Even though these data sets are currently available online, this might change. Thus, the next chunk saves the data as .rds files in this project's raw_data folder. This reduces the chances of losing the data used in this project, which is likely to make it reproducible for a longer time.
+
 ```{r save-data, warning=FALSE} 
 ## use saveRDS() to save each object as a .rds file 
 saveRDS(df1, file = "../../data/raw_data/df_department.rds")
@@ -53,6 +57,10 @@ saveRDS(df2, file = "../../data/raw_data/df_retail.rds")
 ```
 
 ### Wrangle Data
+
+The data sets that will be used in this project were not usable as they were obtained. Thus, the next chunks of code are to solve that problem by wrangling the data. The code has comments explaining what the different lines accomplish.
+
+The following chunk has code for wrangling df2 saving the result as a different data frame called "df_retail". This code was provided by the creator of the original project (Shannon Ellis, if I'm not mistaken).
 
 ```{r wrangle-df2, warning=FALSE} 
 ## an example working with df2
@@ -74,6 +82,8 @@ df_retail <- df2 %>%
   filter(business == "Retail sales, total "| business=="Department stores ")
 ```
 
+The following chunk has code for wrangling df1 and saving the result as a different data frame called "df_department". This chunk was a wrangling exercise: it had the instructions present in the comments but not the functions to fulfill said instructions. So, I modified the code to obtain what was being asked in the comments/instructions.
+
 ```{r wrangle-df1, warning=FALSE} 
 ## now, your turn!
 ## work with df1
@@ -94,13 +104,20 @@ df_department <- df1 %>%
   ## for the entire data set 
   mutate(business = "department stores") %>% 
   ## reorder column names to be : business, year, n
-  select(business, year, n) %>% View()
+  select(business, year, n)
 ```
+
+The following chunk has code for merging the rows of "df_retail" and "df_department" and adding a column called called "df" that informs from which data frame a given entry came from. The code also saves the result as a data frame called "df_total". 
 
 ```{r merge-data, warning=FALSE} 
 ## Now, combine the two data frames
-df_total <- function_name()
+df_total <-
+  bind_rows("df_retail" = df_retail,
+            "df_department" = df_department,
+            .id = "df")
 ```
+
+The following chunk has code for plotting data from the different data frames that were used throughout this project. Information on what is being plotted can be found in this chunk's comments.
 
 ```{r plot, warning=FALSE, fig.width=10} 
 ## Plot Retail Sales data
