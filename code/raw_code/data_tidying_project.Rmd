@@ -1,7 +1,7 @@
 ---
 title: "Data Tidying Project"
 author: "Francisko de Moraes Rezende"
-date: "6/13/2018"
+date: "2019/01/15"
 output: html_document
 ---
 
@@ -52,8 +52,16 @@ Even though these data sets are currently available online, this might change. T
 
 ```{r save-data, warning=FALSE} 
 ## use saveRDS() to save each object as a .rds file 
+
+# There are (at least) two approaches to do this. I initially used the first one, which did what was being asked. I saw the second approach in the answers from the exercise so I decided to add it here as a reminder :)
+
+# this approach saves the file using relative paths
 saveRDS(df1, file = "../../data/raw_data/df_department.rds")
 saveRDS(df2, file = "../../data/raw_data/df_retail.rds")
+
+#This saves the files using absolute paths
+saveRDS(df1, file = "/cloud/project/data_tidying_project/data/raw_data/df_department.rds")
+saveRDS(df2, file = "/cloud/project/data_tidying_project/data/raw_data/df_retail.rds")
 ```
 
 ### Wrangle Data

@@ -371,7 +371,7 @@ $(document).ready(function () {
 
 <h1 class="title toc-ignore">Data Tidying Project</h1>
 <h4 class="author"><em>Francisko de Moraes Rezende</em></h4>
-<h4 class="date"><em>6/13/2018</em></h4>
+<h4 class="date"><em>2019/01/15</em></h4>
 
 </div>
 
@@ -386,22 +386,22 @@ $(document).ready(function () {
 
 GET(&quot;https://query.data.world/s/gdk7iwtlisq6vkktmybqqr7hjjty5s&quot;, write_disk(tf &lt;- tempfile(fileext = &quot;.xls&quot;)))</code></pre>
 <pre><code>## Response [https://download.data.world/file_download/retail/department-store-sales/retail-trade-report-department-stores.xls?auth=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OnNoYW5lbGxpcyIsImlzcyI6ImFnZW50OnNoYW5lbGxpczo6OTA5ZDZlNTQtMmQwZC00MDczLWE4Y2UtYWExNzI3OGJkN2ViIiwiaWF0IjoxNTIzOTkwNDIzLCJyb2xlIjpbInVzZXIiLCJ1c2VyX2FwaV9hZG1pbiIsInVzZXJfYXBpX3JlYWQiLCJ1c2VyX2FwaV93cml0ZSJdLCJnZW5lcmFsLXB1cnBvc2UiOmZhbHNlLCJ1cmwiOiI0YWU5NmEzZjc4Y2EyOGE5MWM1ZDZlMTgxYzg5YjI0NjIzZDY0ZThlIn0.jBFlyy1aloE-EpeYyosD3iRaDPoY75DBqdh7suLoZxKcrsG8N5GtOiFb6sNMjTqqclsHX7P8RUw7T5sAArPbcw]
-##   Date: 2019-01-14 19:33
+##   Date: 2019-01-15 18:56
 ##   Status: 200
 ##   Content-Type: application/vnd.ms-excel
 ##   Size: 62.5 kB
-## &lt;ON DISK&gt;  /tmp/RtmpyIvW48/file5b26c360b00.xls</code></pre>
+## &lt;ON DISK&gt;  /tmp/RtmpKCTxCK/file31d64b2312c.xls</code></pre>
 <pre class="r"><code>df1 &lt;- read_excel(tf)
 
 #2009-2014
 # https://data.world/garyhoov/retail-sales-growth
 GET(&quot;https://query.data.world/s/py7kinxvyuxjpzwdjs2ti4wdmui6bi&quot;, write_disk(tf &lt;- tempfile(fileext = &quot;.xls&quot;)))</code></pre>
 <pre><code>## Response [https://download.data.world/file_download/garyhoov/retail-sales-growth/US%20Retail%20Sales%20by%20Store%20Type%202009-2014.xls?auth=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OnNoYW5lbGxpcyIsImlzcyI6ImFnZW50OnNoYW5lbGxpczo6OTA5ZDZlNTQtMmQwZC00MDczLWE4Y2UtYWExNzI3OGJkN2ViIiwiaWF0IjoxNTIzOTkwNTAwLCJyb2xlIjpbInVzZXIiLCJ1c2VyX2FwaV9hZG1pbiIsInVzZXJfYXBpX3JlYWQiLCJ1c2VyX2FwaV93cml0ZSJdLCJnZW5lcmFsLXB1cnBvc2UiOmZhbHNlLCJ1cmwiOiI5OWRhMDIwMzRlY2Q1YmZmZTRmODFjYzJlMTg4ZmUxOGQyZmEyNDdlIn0.NLTr571lKSZMKhmvIFFQGuoVeFVFr9DrQ7nxBO3LOcLTJUrKivBxWpUrcJcY8dxnkL4FlGba3wsL65c3wLzzxA]
-##   Date: 2019-01-14 19:33
+##   Date: 2019-01-15 18:56
 ##   Status: 200
 ##   Content-Type: application/vnd.ms-excel
 ##   Size: 169 kB
-## &lt;ON DISK&gt;  /tmp/RtmpyIvW48/file5b2343cf83f.xls</code></pre>
+## &lt;ON DISK&gt;  /tmp/RtmpKCTxCK/file31d3fca1f15.xls</code></pre>
 <pre class="r"><code>df2 &lt;- read_excel(tf)</code></pre>
 <pre><code>## New names:
 ## * `` -&gt; `..2`
@@ -417,8 +417,16 @@ colnames(df2) &lt;- df2[1,]</code></pre>
 <h3>Save Raw Data</h3>
 <p>Even though these data sets are currently available online, this might change. Thus, the next chunk saves the data as .rds files in this project’s raw_data folder. This reduces the chances of losing the data used in this project, which is likely to make it reproducible for a longer time.</p>
 <pre class="r"><code>## use saveRDS() to save each object as a .rds file 
+
+# There are (at least) two approaches to do this. I initially used the first one, which did what was being asked. I saw the second approach in the answers from the exercise so I decided to add it here as a reminder :)
+
+# this approach saves the file using relative paths
 saveRDS(df1, file = &quot;../../data/raw_data/df_department.rds&quot;)
-saveRDS(df2, file = &quot;../../data/raw_data/df_retail.rds&quot;)</code></pre>
+saveRDS(df2, file = &quot;../../data/raw_data/df_retail.rds&quot;)
+
+#This saves the files using absolute paths
+saveRDS(df1, file = &quot;/cloud/project/data_tidying_project/data/raw_data/df_department.rds&quot;)
+saveRDS(df2, file = &quot;/cloud/project/data_tidying_project/data/raw_data/df_retail.rds&quot;)</code></pre>
 </div>
 <div id="wrangle-data" class="section level3">
 <h3>Wrangle Data</h3>
